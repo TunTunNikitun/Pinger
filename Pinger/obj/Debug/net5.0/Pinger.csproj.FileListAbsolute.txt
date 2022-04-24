@@ -1,0 +1,7 @@
+C:\Users\nikit\source\repos\Pinger\WebServicesPinger\Pinger\obj\Debug\net5.0\Pinger.csproj.AssemblyReference.cache
+C:\Users\nikit\source\repos\Pinger\WebServicesPinger\Pinger\obj\Debug\net5.0\Pinger.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nikit\source\repos\Pinger\WebServicesPinger\Pinger\obj\Debug\net5.0\Pinger.AssemblyInfoInputs.cache
+C:\Users\nikit\source\repos\Pinger\WebServicesPinger\Pinger\obj\Debug\net5.0\Pinger.AssemblyInfo.cs
+C:\Users\nikit\source\repos\Pinger\WebServicesPinger\Pinger\obj\Debug\net5.0\Pinger.csproj.CoreCompileInputs.cache
+C:\Users\nikit\source\repos\Pinger\WebServicesPinger\Pinger\obj\Debug\net5.0\Pinger.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\nikit\source\repos\Pinger\WebServicesPinger\Pinger\obj\Debug\net5.0\Pinger.MvcApplicationPartsAssemblyInfo.cache

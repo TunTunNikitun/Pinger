@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinger", "Pinger.csproj", "{4C096A6E-F757-4A97-B545-6D0342A6AD23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication3", "WebApplication3.csproj", "{1B04AA69-D0E8-4E1F-9887-E95E9934D7FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4C096A6E-F757-4A97-B545-6D0342A6AD23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C096A6E-F757-4A97-B545-6D0342A6AD23}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C096A6E-F757-4A97-B545-6D0342A6AD23}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C096A6E-F757-4A97-B545-6D0342A6AD23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B04AA69-D0E8-4E1F-9887-E95E9934D7FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B04AA69-D0E8-4E1F-9887-E95E9934D7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B04AA69-D0E8-4E1F-9887-E95E9934D7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B04AA69-D0E8-4E1F-9887-E95E9934D7FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9F48E3B2-9C63-4D8E-8520-9B868E53265E}
+		SolutionGuid = {859C3DCB-1B48-4388-8862-437DBEDAE65B}
 	EndGlobalSection
 EndGlobal

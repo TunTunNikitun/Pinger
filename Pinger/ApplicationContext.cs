@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Pinger.Models;
-namespace Pinger
+using WebApplication3.Models;
+namespace WebApplication3
 {
     public class ApplicationContext : DbContext
     {
@@ -20,7 +20,8 @@ namespace Pinger
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Services>().HasIndex(s => s.Name).IsUnique();
+            modelBuilder.Entity<Services>().HasKey(x => x.Id);
+            modelBuilder.Entity<Log>().HasKey(x => x.Id);
         }
     }
 }

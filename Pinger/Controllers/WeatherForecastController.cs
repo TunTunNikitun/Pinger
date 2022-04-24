@@ -1,8 +1,13 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Pinger.Models;
+using WebApplication3.Models;
 
-namespace Pinger.Controllers
+namespace WebApplication3.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -10,8 +15,8 @@ namespace Pinger.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
 
         private readonly ILogger<WeatherForecastController> _logger;
 
@@ -20,22 +25,24 @@ namespace Pinger.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            //using (ApplicationContext db = new ApplicationContext())
-            //{
-            //    Services ser = new Services();
-            //    ser.Name = "1";
-            //    ser.Url = "22";
-            //    db.Services.Add(ser);
-            //    db.SaveChanges();
-            //}
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Services ser = new Services();
+                ser.Name = "1";
+                ser.Url = "22";
+                db.Services.Add(ser);
+                db.SaveChanges();
+            }
+            
+                var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
         }

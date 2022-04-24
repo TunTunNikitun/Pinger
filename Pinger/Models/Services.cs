@@ -1,4 +1,4 @@
-﻿namespace Pinger.Models
+﻿namespace WebApplication3.Models
 {
     public class Services
     {
