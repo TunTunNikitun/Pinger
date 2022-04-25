@@ -23,8 +23,9 @@ namespace WebApplication3
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                }).ConfigureServices(services =>
-                    services.AddHostedService<BackgroundPinger>());
+                });//.ConfigureServices(services =>
+                //    services.AddHostedService<BackgroundPinger>());
+
     }
 }
 

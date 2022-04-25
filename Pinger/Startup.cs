@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using WebApplication3.Controllers;
+using Hangfire;
 
 namespace WebApplication3
 {
@@ -34,6 +36,9 @@ namespace WebApplication3
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication3", Version = "v1" });
             });
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Pinger;Trusted_Connection=True;"));
+            //services.AddSingleton<ICustomServiceStopper, BackgroundPinger>();
+            services.AddHangfire(x => x.UseSqlServerStorage("Server=(localdb)\\mssqllocaldb;Database=Pinger;Trusted_Connection=True;"));
+            services.AddHangfireServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +61,7 @@ namespace WebApplication3
             {
                 endpoints.MapControllers();
             });
+            app.UseHangfireDashboard();
         }
     }
 }

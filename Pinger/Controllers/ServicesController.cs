@@ -2,7 +2,10 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using WebApplication3.Models;
+using Hangfire;
+using System.Collections.Generic;
 
 namespace WebApplication3.Controllers
 {
@@ -51,47 +54,52 @@ namespace WebApplication3.Controllers
                 var service=db.Services.Where(s=>s.Name==name).FirstOrDefault();
                 service.Status = ping;
                 db.SaveChanges();
-
-            }
+            }            
         }
-            [HttpGet]
+       
+        [HttpGet]
         [Route("Ping Service")]
-        public bool Ping(string name)
+        public void Ping(string name)
         {
-            using (ApplicationContext db = new ApplicationContext())
+            RecurringJob.AddOrUpdate(() => BackgroundPinger.Ping(), Cron.Minutely);
+            
+            //using (ApplicationContext db = new ApplicationContext())
+            //{
+            //    var service= db.Services.Where(s=>s.Name == name).FirstOrDefault();
+            //    var result= SiteAvailability(service.Url);
+            //    if(result)
+            //        return true;
+            //    else
+            //    {
+            //        return false;
+            //        Log log = new Log();
+            //        log.ServiseId=service.Id;
+            //        log.PingResalt = result.ToString();
+            //        log.PingTime = DateTime.Now.ToString();
+            //        db.Log.Add(log);
+            //        db.SaveChanges();
+            //    }
+            //}
+        }
+        [HttpGet]
+        [Route("Services list")]
+        public List<Services> ServicesList()
+        {
+            using(var db = new ApplicationContext())
             {
-                var service= db.Services.Where(s=>s.Name == name).FirstOrDefault();
-                var result= SiteAvailability(service.Url);
-                if(result)
-                    return true;
-                else
-                {
-                    return false;
-                    Log log = new Log();
-                    log.ServiseId=service.Id;
-                    log.PingResalt = result.ToString();
-                    log.PingTime = DateTime.Now.ToString();
-                    db.Log.Add(log);
-                    db.SaveChanges();
-                }
+                var resalt = db.Services.ToList();
+                return resalt;
             }
         }
-        private static bool SiteAvailability(string uri)
+        [HttpGet]
+        [Route("Log")]
+        public List<Log> ShowLog()
         {
-            bool available;
-            try
+            using (var db = new ApplicationContext())
             {
-                var request = WebRequest.Create(uri);
-                request.Credentials = CredentialCache.DefaultCredentials;
-                var response = (HttpWebResponse)request.GetResponse();
-                available = response.StatusCode == HttpStatusCode.OK;
+                var resalt = db.Log.ToList();
+                return resalt;
             }
-            catch
-            {
-                available = false;
-            }
-            return available;
         }
-
     }
 }
