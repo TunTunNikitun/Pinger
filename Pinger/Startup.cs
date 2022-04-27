@@ -13,7 +13,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebApplication3.Controllers;
+using WebApplication3.Models;
 using Hangfire;
+using WebApplication3.API_Services;
+using CorePush.Google;
+using CorePush.Apple;
 
 namespace WebApplication3
 {
@@ -31,6 +35,11 @@ namespace WebApplication3
         {
 
             services.AddControllers();
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddHttpClient<FcmSender>();
+            services.AddHttpClient<ApnSender>();
+            var appSettingsSection = Configuration.GetSection("FcmNotification");
+            services.Configure<FcmNotificationSetting>(appSettingsSection);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication3", Version = "v1" });

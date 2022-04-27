@@ -44,6 +44,18 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "CorePush": {
+              "target": "Package",
+              "version": "[3.0.10, )"
+            },
+            "FirebaseAdmin": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "Google.Cloud.Firestore": {
+              "target": "Package",
+              "version": "[2.5.0, )"
+            },
             "Hangfire": {
               "target": "Package",
               "version": "[1.7.28, )"

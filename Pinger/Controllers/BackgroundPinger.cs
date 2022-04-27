@@ -20,17 +20,21 @@ namespace WebApplication3.Controllers
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-               var servicesToPing = db.Services.Where(s=> s.Status==true).ToList();
-                foreach (var service in servicesToPing)
+                
+               var servicesToPing = (db.Services.AsQueryable().Where(s=> s.Status==true)).ToList();
+                if (servicesToPing.Count > 0)
                 {
-                    if(!SiteAvailability(service.Url))
+                    foreach (var service in servicesToPing)
                     {
-                        Log log = new Log();
-                        log.ServiseId = service.Id;
-                        log.PingResalt = "false";
-                        log.PingTime = DateTime.Now.ToString();
-                        db.Log.Add(log);
-                        db.SaveChanges();
+                        if (!SiteAvailability(service.Url))
+                        {
+                            Log log = new Log();
+                            log.ServiseId = service.Id;
+                            log.PingResalt = "false";
+                            log.PingTime = DateTime.Now.ToString();
+                            db.Log.Add(log);
+                            db.SaveChanges();
+                        }
                     }
                 }
             }

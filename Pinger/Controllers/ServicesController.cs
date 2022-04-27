@@ -36,7 +36,7 @@ namespace WebApplication3.Controllers
             {
                 try
                 {
-                    db.Services.Remove(db.Services.Where(s => s.Name == name).First());
+                    db.Services.Remove(db.Services.AsQueryable().Where(s => s.Name == name).First());
                     db.SaveChanges();
                 }
                 catch
@@ -51,7 +51,7 @@ namespace WebApplication3.Controllers
         {
             using(ApplicationContext db = new ApplicationContext())
             {
-                var service=db.Services.Where(s=>s.Name==name).FirstOrDefault();
+                var service=db.Services.AsQueryable().Where(s=>s.Name==name).FirstOrDefault();
                 service.Status = ping;
                 db.SaveChanges();
             }            
