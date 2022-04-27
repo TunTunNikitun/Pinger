@@ -26,11 +26,12 @@ namespace WebApplication3.Controllers
                 {
                     foreach (var service in servicesToPing)
                     {
-                        if (!SiteAvailability(service.Url))
+                        var code = SiteAvailability(service.Url);
+                        if (code!="OK")
                         {
                             Log log = new Log();
                             log.ServiseId = service.Id;
-                            log.PingResalt = "false";
+                            log.PingResalt = code.ToString();
                             log.PingTime = DateTime.Now.ToString();
                             db.Log.Add(log);
                             db.SaveChanges();
@@ -39,19 +40,22 @@ namespace WebApplication3.Controllers
                 }
             }
         }
-        private static bool SiteAvailability(string uri)
+        private static string SiteAvailability(string uri)
         {
-            bool available;
+            //bool available;
+            string available;
             try
             {
                 var request = WebRequest.Create(uri);
                 request.Credentials = CredentialCache.DefaultCredentials;
                 var response = (HttpWebResponse)request.GetResponse();
-                available = response.StatusCode == HttpStatusCode.OK;
+                //available = response.StatusCode == HttpStatusCode.OK;
+                available = response.StatusCode.ToString();
+
             }
-            catch
+            catch(WebException webEx)
             {
-                available = false;
+                available = webEx.Status.ToString();
             }
             return available;
         }
