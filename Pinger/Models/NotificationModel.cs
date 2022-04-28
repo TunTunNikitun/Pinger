@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace WebApplication3.Models
 {
     public class NotificationModel
     {
         [JsonProperty("deviceId")]
-        public string DeviceId { get; set; }
+        public List<string> DeviceId { get; set; }
         [JsonProperty("isAndroiodDevice")]
         public bool IsAndroiodDevice { get; set; }
         [JsonProperty("title")]

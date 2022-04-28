@@ -6,16 +6,13 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using WebApplication3.Models;
-
+using WebApplication3.API_Services;
+using Microsoft.Extensions.Options;
 
 namespace WebApplication3.Controllers
 {
-    //public interface ICustomServiceStopper
-    //{
-    //    Task StopAsync(CancellationToken token = default);
-    //}
-    public static class BackgroundPinger/* : BackgroundService, ICustomServiceStopper*/
-    {
+    public static class BackgroundPinger
+    { 
         public static void Ping()
         {
             using (ApplicationContext db = new ApplicationContext())
@@ -35,21 +32,38 @@ namespace WebApplication3.Controllers
                             log.PingTime = DateTime.Now.ToString();
                             db.Log.Add(log);
                             db.SaveChanges();
+                            SendPing(service, code);
                         }
                     }
                 }
             }
         }
+        private static void SendPing(Services service, string code)
+        {
+            NotificationModel not = new NotificationModel();
+            not.Title = "Connecting Error";
+            not.IsAndroiodDevice = true;
+            not.Body = service.Name + " "+ code;
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                not.DeviceId = db.AndroidDevices.AsQueryable().Select(x => x.DeviceId).ToList();
+                    }
+            FcmNotificationSetting settings = new FcmNotificationSetting();
+            settings.SenderId = "842859204982";
+            settings.ServerKey = "AAAAxD5S0XY:APA91bF89LSiUMaJghaQEO2UXLHAqErxYFvsQ005YDTkQdPHF6v7gug53o3vwE0PIF7YGObpc58ZvNbts-9I3alW1WbSMdnUlGNfc1k1fN-PQXMozcn3KS_lkwOBs2NtMDHfswfhxKxJ";
+  
+            NotificationService s = new NotificationService(settings);
+            
+            s.SendNotification(not);
+        }
         private static string SiteAvailability(string uri)
         {
-            //bool available;
             string available;
             try
             {
                 var request = WebRequest.Create(uri);
                 request.Credentials = CredentialCache.DefaultCredentials;
                 var response = (HttpWebResponse)request.GetResponse();
-                //available = response.StatusCode == HttpStatusCode.OK;
                 available = response.StatusCode.ToString();
 
             }
@@ -59,33 +73,6 @@ namespace WebApplication3.Controllers
             }
             return available;
         }
-        //private readonly ILogger<BackgroundPinger> _logger;
-        //private Timer _timer;
-        //public BackgroundPinger(ILogger<BackgroundPinger> logger)
-        //{
-        //    this._logger = logger;
-        //}
-        //public void Dispose()
-        //{
-        //    _timer?.Dispose();
-        //}
-        //public Task StartAsync(CancellationToken cancellationToken)
-        //{
-        //    _timer=new Timer(o=>_logger.LogInformation("ping"),null,TimeSpan.Zero,TimeSpan.FromSeconds(5));
-        //    return Task.CompletedTask;
-        //}
-        //Task ICustomServiceStopper.StopAsync(CancellationToken token) => base.StopAsync(token);
-
-        ////public Task StopAsync(CancellationToken cancellationToken)
-        ////{
-        ////    return Task.CompletedTask;
-        ////}
-
-        //protected override Task ExecuteAsync(CancellationToken stoppingToken)
-        //{
-        //    _timer = new Timer(o => _logger.LogInformation("ping"), null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
-        //    return Task.CompletedTask;
-        //    //throw new NotImplementedException();
-        //}
+       
     }
 }

@@ -15,12 +15,13 @@ namespace WebApplication3.Controllers
     {
         [HttpPost]
         [Route("Add Service")]
-       public void ServiceAdd(string name, string url)
+       public void ServiceAdd(string name, string url, bool ping)
         {
             Services serv = new Services
             {
                 Name = name,
-                Url = url
+                Url = url,
+                Status=ping
             };
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -56,31 +57,7 @@ namespace WebApplication3.Controllers
                 db.SaveChanges();
             }            
         }
-       
-        [HttpGet]
-        [Route("Ping Service")]
-        public void Ping(string name)
-        {
-            RecurringJob.AddOrUpdate(() => BackgroundPinger.Ping(), Cron.Minutely);
-            
-            //using (ApplicationContext db = new ApplicationContext())
-            //{
-            //    var service= db.Services.Where(s=>s.Name == name).FirstOrDefault();
-            //    var result= SiteAvailability(service.Url);
-            //    if(result)
-            //        return true;
-            //    else
-            //    {
-            //        return false;
-            //        Log log = new Log();
-            //        log.ServiseId=service.Id;
-            //        log.PingResalt = result.ToString();
-            //        log.PingTime = DateTime.Now.ToString();
-            //        db.Log.Add(log);
-            //        db.SaveChanges();
-            //    }
-            //}
-        }
+
         [HttpGet]
         [Route("Services list")]
         public List<Services> ServicesList()
